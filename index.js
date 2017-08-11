@@ -7,6 +7,7 @@ var router = express.Router();              // get an instance of the express Ro
 var admin = require("firebase-admin");
 var request = require("request");
 
+console.log(process.env.FIREBASE_PRIVATE_KEY);
 
 admin.initializeApp({
   credential: admin.credential.cert({
