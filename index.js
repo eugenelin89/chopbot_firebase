@@ -25,13 +25,7 @@ router.use(function(req, res, next) {
 
     if(process.env.CHOPBASE_TOKEN != req.get('CHOPBASE_TOKEN')){
         console.log('Bad Token')
-        //res.status(401).send('Unauthorized')
-
-        //next(new Error('Unauthorized'));
-        res.end();
-
-    }else{
-        console.log('Good Token')
+        next(new Error('Unauthorized'));
     }
 
     next(); // make sure we go to the next routes and don't stop here
