@@ -7,7 +7,7 @@ var router = express.Router();              // get an instance of the express Ro
 var admin = require("firebase-admin");
 var request = require("request");
 
-var serviceAccount = require("./junkbase-key.json");
+//var serviceAccount = require("./junkbase-key.json");
 
 admin.initializeApp({
   //credential: admin.credential.cert(serviceAccount),
