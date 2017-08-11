@@ -26,6 +26,7 @@ router.use(function(req, res, next) {
     if(process.env.CHOPBASE_TOKEN != req.get('CHOPBASE_TOKEN')){
         console.log('Bad Token')
         //res.status(401).send('Unauthorized')
+        throw new Error();
     }else{
         console.log('Good Token')
     }
