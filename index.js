@@ -35,44 +35,6 @@ router.get('/', function(req, res) {
 // router.route('/theRoute') returns an instance of a single route which you can then use to handle HTTP verbs with optional middleware.
 // =============================================================================
 
-// body in the form of:
-// {'state':'WAIT_FOR_ZIP'}
-// Will save under the order node.
-router.route('/order')
-    .post(function(req, res){
-        sender_id = req.query['sender_id'];
-        var key = Object.keys(req.body)[0];
-        var ref = db.ref("orders/"+sender_id+"/"+key);
-        ref.set(req.body[key]);
-        res.json(req.body);
-    })
-    .delete(function(req, res){
-        sender_id = req.query['sender_id'];
-        var ref = db.ref("orders/"+sender_id+"/");
-        ref.remove();
-        res.json({});
-    })
-    .get(function(req, res){
-        sender_id = req.query['sender_id'];
-        key = req.query['key'];
-        path = "orders/"+sender_id;
-        if(key){
-            path = path + "/" + key;
-        }
-        ref = db.ref(path);
-        ref.once("value",function(data){
-            res.json(data.val());
-        })
-    });
-
-router.route('/archive')
-.post(function(req,res){
-    sender_id = req.query['sender_id'];
-    var ref = db.ref("archive/"+sender_id);
-    ref.push(req.body);
-    res.json(req.body);
-});
-
 router.route('/state')
     .get(function(req, res){
         sender_id = req.query['sender_id'];
@@ -91,75 +53,6 @@ router.route('/state')
         ref.set(req.body['state']);
         res.json(req.body);
     });
-
-// => working on POST
-router.route('/menu')
-    .get(function(req, res){
-        var ref = db.ref("menu/");
-        ref.once("value", function(data){
-            res.json(data.val());
-        });
-    })
-
-    .post(function(req, res){
-        var ref = db.ref("menu/");
-        console.log('received: '+JSON.stringify(req.body));
-        ref.set(req.body);
-        console.log('done');
-        res.json(req.body);
-    });
-
-router.route('/message')
-    .get(function(req,res){
-        // test code
-        //var ref = db.ref("baymax/12345");
-        //var node = ref.child("messages");
-        //node.set({test:'test'});
-        res.json({ message: 'Hello JF1!' });
-    })
-
-    .post(function(req,res){
-        // incoming message
-        // outgoing message
-        var body = req.body;
-        console.log('received: '+JSON.stringify(body));
-        var ref = db.ref("messages/"+body["sender_id"]+"/");
-        ref.push(body);
-        res.json(body);
-});
-
-router.route('/score')
-    .get(function(req, res){
-        sender_id = req.query['sender_id'];
-        var ref = db.ref("scores/"+sender_id+"/");
-        ref.once("value", function(data){
-            res.json(data.val());
-        });
-    })
-    .post(function(req, res){
-        var body = req.body
-        var ref = db.ref("scores/"+body["sender_id"]+"/"+body["question"]+"/");
-        ref.set(body);
-    });
-
-router.route('/profile')
-    .get(function(req, res){
-        sender_id = req.query['sender_id'];
-        token = process.env.FB_ACCESS_TOKEN;
-
-        request({
-            url: 'https://graph.facebook.com/v2.6/'+sender_id+'?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='+token,
-            method: 'GET',
-            }, function(error, response, body) {
-                if (error) {
-                    console.log('Error getting FB Profile: ', error);
-                } else if (response.body.error) {
-                    console.log('Error: ', response.body.error);
-                }else{
-                    res.json(JSON.parse(body));
-                }
-        });
-    })
 
 // Express Config
 // ==============
