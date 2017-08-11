@@ -27,7 +27,7 @@ router.use(function(req, res, next) {
         console.log('Bad Token')
         //res.status(401).send('Unauthorized')
 
-        next(Error('Unauthorized'));
+        next(new Error('Unauthorized'));
 
     }else{
         console.log('Good Token')
