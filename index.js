@@ -25,7 +25,7 @@ router.use(function(req, res, next) {
 
     if(process.env.CHOPBASE_TOKEN != req.get('CHOPBASE_TOKEN')){
         console.log('Bad Token')
-        next('err')
+        res.send(401, 'Unauthorized');
     }else{
         console.log('Good Token')
     }
@@ -85,7 +85,7 @@ app.all('*', function(req, res, next) {
 // Handle Error
 app.use(function(err, req, res, next){
     console.error(err.stack);
-    res.send(400, 'FAIL...');
+    res.send(500, 'FAIL...');
 });
 
 // REGISTER OUR ROUTES -------------------------------
