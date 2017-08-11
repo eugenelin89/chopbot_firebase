@@ -22,6 +22,13 @@ var db = admin.database();
 router.use(function(req, res, next) {
     // do logging
     console.log('Something is happening.');
+
+    if(process.env.CHOPBASE_TOKEN != req.get('CHOPBASE_TOKEN')){
+        console.log('Bad Token')
+    }else{
+        console.log('Good Token')
+    }
+
     next(); // make sure we go to the next routes and don't stop here
 });
 
@@ -38,7 +45,7 @@ router.route('/state')
     .get(function(req, res){
         sender_id = req.query['sender_id'];
         //var ref = db.ref("orders/"+sender_id+"/");
-        var ref = db.ref("orders/"+sender_id+"/state");
+        var ref = db.ref(sender_id+"/state");
         ref.once("value",function(data){
             res.json(data.val());
         })
