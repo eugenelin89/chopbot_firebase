@@ -7,10 +7,8 @@ var router = express.Router();              // get an instance of the express Ro
 var admin = require("firebase-admin");
 var request = require("request");
 
-//var serviceAccount = require("./junkbase-key.json");
 
 admin.initializeApp({
-  //credential: admin.credential.cert(serviceAccount),
   credential: admin.credential.cert({
     "private_key": process.env.FIREBASE_PRIVATE_KEY,
     "client_email": process.env.FIREBASE_CLIENT_EMAIL,
