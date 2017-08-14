@@ -81,6 +81,13 @@ app.all('*', function(req, res, next) {
     next();
 });
 
+
+
+// REGISTER OUR ROUTES -------------------------------
+// all of our routes will be prefixed with /api
+app.use('/v1', router);
+
+
 // Handle Error
 app.use(function(err, req, res, next){
     console.log('An error has occurred... ')
@@ -88,10 +95,6 @@ app.use(function(err, req, res, next){
     //res.send(500, 'FAIL...');
     //res.status(err.status || 403);
 });
-
-// REGISTER OUR ROUTES -------------------------------
-// all of our routes will be prefixed with /api
-app.use('/v1', router);
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
