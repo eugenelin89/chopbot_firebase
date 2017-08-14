@@ -93,7 +93,7 @@ app.use(function(err, req, res, next){
     console.log('An error has occurred... ')
     //console.error(err.stack);
     //res.send(500, 'FAIL...');
-    //res.status(err.status || 403);
+    res.status(err.status || 403);
 });
 
 app.listen(app.get('port'), function() {
