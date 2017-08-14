@@ -84,7 +84,8 @@ app.all('*', function(req, res, next) {
 app.use(function(err, req, res, next){
     //console.log('An error has occurred... ')
     //console.error(err.stack);
-    res.send(500, 'FAIL...');
+    //res.send(500, 'FAIL...');
+    res.status(err.status || 403);
 });
 
 // REGISTER OUR ROUTES -------------------------------
