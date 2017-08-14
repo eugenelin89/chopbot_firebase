@@ -26,10 +26,10 @@ router.use(function(req, res, next) {
     if(process.env.CHOPBASE_TOKEN != req.get('CHOPBASE_TOKEN')){
         console.log('Bad Token')
         next(new Error('Unauthorized'));
-    }else{
-        //next(); // make sure we go to the next routes and don't stop here
-        throw 'TestError';
     }
+
+    next(); // make sure we go to the next routes and don't stop here
+
 });
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
@@ -92,8 +92,7 @@ app.use('/v1', router);
 app.use(function(err, req, res, next){
     console.log('An error has occurred... ')
     //console.error(err.stack);
-    res.send(500, 'FAIL...');
-    //res.status(err.status || 403);
+    res.status(err.status || 500).send(err);
 });
 
 app.listen(app.get('port'), function() {
