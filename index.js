@@ -26,9 +26,9 @@ router.use(function(req, res, next) {
     if(process.env.CHOPBASE_TOKEN != req.get('CHOPBASE_TOKEN')){
         console.log('Bad Token')
         next(new Error('Unauthorized'));
+    }else{
+        next(); // make sure we go to the next routes and don't stop here
     }
-
-    next(); // make sure we go to the next routes and don't stop here
 });
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
