@@ -83,7 +83,7 @@ app.all('*', function(req, res, next) {
 
 // Handle Error
 app.use(function(err, req, res, next){
-    //console.log('An error has occurred... ')
+    console.log('An error has occurred... ')
     //console.error(err.stack);
     //res.send(500, 'FAIL...');
     //res.status(err.status || 403);
