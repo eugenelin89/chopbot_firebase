@@ -24,7 +24,7 @@ router.use(function(req, res, next) {
     console.log('Something is happening.');
 
     if(process.env.CHOPBASE_TOKEN != req.get('CHOPBASE_TOKEN')){
-        console.log('Bad Token')
+        console.log('Unauthorized')
         next(new Error('Unauthorized'));
     }
 
