@@ -54,7 +54,7 @@ router.route('/state')
     .post(function(req,res){
         sender_id = req.query['sender_id'];
         //var ref = db.ref("orders/"+sender_id+"/");
-        var ref = db.ref("orders/"+sender_id+"/state");
+        var ref = db.ref(sender_id+"/state");
         // body in the form {"state":"INIT"}
         ref.set(req.body['state']);
         res.json(req.body);
