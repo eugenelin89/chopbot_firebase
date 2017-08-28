@@ -44,8 +44,9 @@ router.get('/', function(req, res) {
 router.route('/state')
     .get(function(req, res){
         sender_id = req.query['sender_id'];
+        bot_id = req.query['bot_id'];
         //var ref = db.ref("orders/"+sender_id+"/");
-        var ref = db.ref(sender_id+"/state");
+        var ref = db.ref(bot_id+'/'+sender_id+"/state");
         ref.once("value",function(data){
             res.json(data.val());
         })
@@ -53,8 +54,9 @@ router.route('/state')
 
     .post(function(req,res){
         sender_id = req.query['sender_id'];
+        bot_id = req.query['bot_id'];
         //var ref = db.ref("orders/"+sender_id+"/");
-        var ref = db.ref(sender_id+"/state");
+        var ref = db.ref(bot_id +'/'+sender_id+"/state");
         // body in the form {"state":"INIT"}
         ref.set(req.body['state']);
         res.json(req.body);
