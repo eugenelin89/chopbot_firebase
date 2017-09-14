@@ -62,6 +62,16 @@ router.route('/state')
         res.json(req.body);
     });
 
+router.route('/order')
+    .post(function(req, res){
+        sender_id = req.query['sender_id'];
+        bot_id = req.query['bot_id'];
+        var ref = db.ref(bot_id +'/'+sender_id+"/order");
+        ref.push(req.body);
+        res.json(req.body);
+    });
+
+
 // Express Config
 // ==============
 app.set('port', (process.env.PORT || 5000));
