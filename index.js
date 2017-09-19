@@ -63,6 +63,14 @@ router.route('/state')
     });
 
 router.route('/current_order')
+    .get(function(req, res){
+        sender_id = req.query['sender_id'];
+        bot_id = req.query['bot_id'];
+        var ref = db.ref(bot_id +'/'+sender_id+"/current_order");
+        ref.once("value",function(data){
+            res.json(data.val());
+        })
+    })
     .post(function(req, res){
         sender_id = req.query['sender_id'];
         bot_id = req.query['bot_id'];
