@@ -81,8 +81,10 @@ router.route('/current_order')
     .put(function(req, res){
         sender_id = req.query['sender_id'];
         bot_id = req.query['bot_id'];
-        var ref = db.ref(bot_id +'/'+sender_id+"/current_order");
-        ref.set(req.body);
+        line_item_id = req.query['line_item_id']
+        var ref = db.ref(bot_id +'/'+sender_id+"/current_order/" + line_item_id);
+
+        ref.update(req.body);
         res.json(req.body);
     })
 
