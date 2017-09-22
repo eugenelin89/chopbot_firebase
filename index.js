@@ -77,7 +77,14 @@ router.route('/current_order')
         var ref = db.ref(bot_id +'/'+sender_id+"/current_order");
         var newPostRef = ref.push(req.body);
         res.json({'push_id' : newPostRef.key});
-    });
+    })
+    .put(function(req, res){
+        sender_id = req.query['sender_id'];
+        bot_id = req.query['bot_id'];
+        var ref = db.ref(bot_id +'/'+sender_id+"/current_order");
+        ref.set(req.body);
+        res.json(req.body);
+    })
 
 
 // Express Config
