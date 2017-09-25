@@ -87,7 +87,6 @@ router.route('/current_order')
 
         sender_id = req.query['sender_id'];
         bot_id = req.query['bot_id'];
-        time_stamp = req.query['time_stamp']
         path = bot_id +'/'+sender_id+'/current_order/line_items';
         var ref = db.ref(path);
         ref.set(req.body);
@@ -97,6 +96,19 @@ router.route('/current_order')
         var ref = db.ref(bot_id +'/'+sender_id+"/current_order/time_stamp");
         ref.set((new Date).getTime());
     })
+    .delete(function(req, res)){
+        sender_id = req.query['sender_id'];
+        bot_id = req.query['bot_id'];
+        line_item_id = req.query['line_item_id'];
+        path = bot_id +'/'+sender_id+'/current_order/line_items/'+line_item_id;
+        var ref = db.ref(path);
+        ref.set(null);
+        res.json({})
+
+        // time stamp
+        var ref = db.ref(bot_id +'/'+sender_id+"/current_order/time_stamp");
+        ref.set((new Date).getTime());
+    }
 
 
 // Express Config
