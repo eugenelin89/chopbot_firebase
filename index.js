@@ -96,7 +96,7 @@ router.route('/current_order')
         var ref = db.ref(bot_id +'/'+sender_id+"/current_order/time_stamp");
         ref.set((new Date).getTime());
     })
-    .delete(function(req, res)){
+    .delete(function(req, res){
         sender_id = req.query['sender_id'];
         bot_id = req.query['bot_id'];
         line_item_id = req.query['line_item_id'];
