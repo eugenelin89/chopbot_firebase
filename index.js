@@ -106,14 +106,14 @@ router.route('/current_order')
         }
         var ref = db.ref(path);
         ref.set(null);
-        res.json({})
+        res.json({});
 
         // time stamp
         if(line_item_id!=null){
             var ref = db.ref(bot_id +'/'+sender_id+"/current_order/time_stamp");
             ref.set((new Date).getTime());
         }
-    }
+    })
 
 
 // Express Config
