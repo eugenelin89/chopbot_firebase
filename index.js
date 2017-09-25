@@ -75,7 +75,7 @@ router.route('/current_order')
         sender_id = req.query['sender_id'];
         bot_id = req.query['bot_id'];
         req.body['time_stamp'] = (new Date).getTime();
-        var ref = db.ref(bot_id +'/'+sender_id+"/current_order");
+        var ref = db.ref(bot_id +'/'+sender_id+"/current_order/line_items");
         var newPostRef = ref.push(req.body);
         res.json({'push_id' : newPostRef.key});
 
@@ -88,11 +88,14 @@ router.route('/current_order')
         sender_id = req.query['sender_id'];
         bot_id = req.query['bot_id'];
         time_stamp = req.query['time_stamp']
-        path = bot_id +'/'+sender_id+'/current_order';
-        req.body['time_stamp'] = (new Date).getTime();
+        path = bot_id +'/'+sender_id+'/current_order/line_items';
         var ref = db.ref(path);
         ref.set(req.body);
         res.json(req.body);
+
+        // time stamp
+        var ref = db.ref(bot_id +'/'+sender_id+"/current_order/time_stamp");
+        ref.set((new Date).getTime());
     })
 
 
