@@ -78,6 +78,10 @@ router.route('/current_order')
         var ref = db.ref(bot_id +'/'+sender_id+"/current_order");
         var newPostRef = ref.push(req.body);
         res.json({'push_id' : newPostRef.key});
+
+        // time stamp
+        var ref = db.ref(bot_id +'/'+sender_id+"/current_order/time_stamp");
+        ref.set((new Date).getTime());
     })
     .put(function(req, res){
 
