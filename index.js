@@ -79,20 +79,14 @@ router.route('/current_order')
         res.json({'push_id' : newPostRef.key});
     })
     .put(function(req, res){
-        console.log('00000000000')
+
         sender_id = req.query['sender_id'];
         bot_id = req.query['bot_id'];
-        sub_path = req.query['sub_path']
+        time_stamp = req.query['time_stamp']
         path = bot_id +'/'+sender_id+'/current_order';
-        console.log('1111');
-        if(sub_path != null){
-            path = path + '/' + sub_path;
-        }
-        console.log('2222');
-        console.log(path);
+        req.body['time_stamp'] = (new Date).getTime();
         var ref = db.ref(path);
-        //ref.set(req.body);
-        ref.set('test');
+        ref.set(req.body);
         res.json(req.body);
     })
 
