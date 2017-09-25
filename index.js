@@ -86,6 +86,7 @@ router.route('/current_order')
         if(sub_path != null){
             path = path + '/' + sub_path
         }
+        console.log(path)
         var ref = db.ref(path);
         ref.set(req.body);
         res.json(req.body);
