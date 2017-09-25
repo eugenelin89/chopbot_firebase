@@ -91,7 +91,8 @@ router.route('/current_order')
         console.log('2222');
         console.log(path);
         var ref = db.ref(path);
-        ref.set(req.body);
+        //ref.set(req.body);
+        ref.set('test');
         res.json(req.body);
     })
 
