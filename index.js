@@ -100,14 +100,19 @@ router.route('/current_order')
         sender_id = req.query['sender_id'];
         bot_id = req.query['bot_id'];
         line_item_id = req.query['line_item_id'];
-        path = bot_id +'/'+sender_id+'/current_order/line_items/'+line_item_id;
+        path = bot_id +'/'+sender_id+'/current_order';
+        if(line_item_id!=null){
+            path += '/line_items/'+line_item_id;
+        }
         var ref = db.ref(path);
         ref.set(null);
         res.json({})
 
         // time stamp
-        var ref = db.ref(bot_id +'/'+sender_id+"/current_order/time_stamp");
-        ref.set((new Date).getTime());
+        if(line_item_id!=null){
+            var ref = db.ref(bot_id +'/'+sender_id+"/current_order/time_stamp");
+            ref.set((new Date).getTime());
+        }
     }
 
 
