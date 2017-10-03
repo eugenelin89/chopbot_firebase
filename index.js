@@ -62,6 +62,21 @@ router.route('/state')
         res.json(req.body);
     });
 
+router.route('/invoice')
+    .put(function(req, res){
+        sender_id = req.query['sender_id'];
+        bot_id = req.query['bot_id'];
+        path = bot_id +'/'+sender_id+'/current_order/invoice';
+        var ref = db.ref(path);
+        ref.set(req.body);
+        res.json(req.body);
+
+        // time stamp
+        var ref = db.ref(bot_id +'/'+sender_id+"/current_order/time_stamp");
+        ref.set((new Date).getTime());
+
+    })
+
 router.route('/current_order')
     .get(function(req, res){
         sender_id = req.query['sender_id'];
