@@ -77,6 +77,25 @@ router.route('/invoice')
 
     })
 
+router.route('/last_message')
+    .get(function(req, res){
+        sender_id = req.query['sender_id'];
+        bot_id = req.query['bot_id'];
+        var ref = db.ref(bot_id +'/'+sender_id+"/last_message");
+        ref.once("value",function(data){
+            res.json(data.val());
+        })
+    })
+    .put(function(req, res){
+        sender_id = req.query['sender_id'];
+        bot_id = req.query['bot_id'];
+        path = bot_id +'/'+sender_id+'/last_message';
+        var ref = db.ref(path);
+        req.body['time_stamp'] = (new Date).getTime()
+        ref.set(req.body);
+        res.json(req.body);
+    })
+
 router.route('/current_order')
     .get(function(req, res){
         sender_id = req.query['sender_id'];
