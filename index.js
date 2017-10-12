@@ -150,6 +150,64 @@ router.route('/current_order')
     })
 
 
+    router.route('/order')
+        .get(function(req, res){
+            sender_id = req.query['sender_id'];
+            bot_id = req.query['bot_id'];
+            order_type = req.query['order_type']
+            var ref = db.ref(bot_id +'/'+sender_id+'/'+order_type);
+            ref.once("value",function(data){
+                res.json(data.val());
+            })
+        })
+        .post(function(req, res){
+            sender_id = req.query['sender_id'];
+            bot_id = req.query['bot_id'];
+            order_type = req.query['order_type']
+            req.body['time_stamp'] = (new Date).getTime();
+            var ref = db.ref(bot_id +'/'+sender_id+'/'+order_type+"/line_items");
+            var newPostRef = ref.push(req.body);
+            res.json({'push_id' : newPostRef.key});
+
+            // time stamp
+            var ref = db.ref(bot_id +'/'+sender_id+"/"+order_type+"/time_stamp");
+            ref.set((new Date).getTime());
+        })
+        .put(function(req, res){
+
+            sender_id = req.query['sender_id'];
+            bot_id = req.query['bot_id'];
+            order_type = req.query['order_type']
+            path = bot_id +'/'+sender_id+'/'+order_type+'/line_items';
+            var ref = db.ref(path);
+            ref.set(req.body);
+            res.json(req.body);
+
+            // time stamp
+            var ref = db.ref(bot_id +'/'+sender_id+"/"+order_type+"/time_stamp");
+            ref.set((new Date).getTime());
+        })
+        .delete(function(req, res){
+            sender_id = req.query['sender_id'];
+            bot_id = req.query['bot_id'];
+            line_item_id = req.query['line_item_id'];
+            order_type = req.query['order_type']
+            path = bot_id +'/'+sender_id+'/'+order_type;
+            if(line_item_id!=null){
+                path += '/line_items/'+line_item_id;
+            }
+            var ref = db.ref(path);
+            ref.set(null);
+            res.json({});
+
+            // time stamp
+            if(line_item_id!=null){
+                var ref = db.ref(bot_id +'/'+sender_id+"/"+current_order+"/time_stamp");
+                ref.set((new Date).getTime());
+            }
+        })
+
+
 // Express Config
 // ==============
 app.set('port', (process.env.PORT || 5000));
