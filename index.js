@@ -192,10 +192,17 @@ router.route('/current_order')
             bot_id = req.query['bot_id'];
             line_item_id = req.query['line_item_id'];
             order_type = req.query['order_type']
-            path = bot_id +'/'+sender_id+'/'+order_type;
-            if(line_item_id!=null){
-                path += '/line_items/'+line_item_id;
+
+            path = ''
+            if(order_type == 'ALL'){
+                path = bot_id +'/'+sender_id
+            }else{
+                path = bot_id +'/'+sender_id+'/'+order_type;
+                if(line_item_id!=null){
+                    path += '/line_items/'+line_item_id;
+                }
             }
+
             var ref = db.ref(path);
             ref.set(null);
             res.json({});
